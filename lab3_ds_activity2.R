@@ -1,5 +1,3 @@
-#enable package ni:
-#caret, cowplot, dlookr, dplyr, ggplot2, mice, missForest, tidyverse, 
 getwd()
 churn2 = read.csv("Churnn_Train.csv", header = TRUE)
 
@@ -13,16 +11,7 @@ churn_numeric <- churn2 %>%
 
 md.pattern(churn_numeric)
 
-#churn_numeric <- churn2 %>%
- # select(Total.Charges, Monthly.Charges)
-
-# Use missForest to impute missing values.
-#valuemiceforest_imputed <- data.frame(
- # original = churn2$Total.Charges,
-  #imputed_missForest = missForest(churn_numeric)$ximp$Total.Charges
-#)
-
-
+#creates data frame that consist of columns of various total charges in various imputed forms
 valuemiceforest_imputed <- data.frame(
   original = churn2$Total.Charges,
   imputed_zero = replace(churn2$Total.Charges, is.na(churn2$Total.Charges), 0),
@@ -33,13 +22,6 @@ valuemiceforest_imputed <- data.frame(
   imputed_lasso = complete(mice(churn_numeric, method = "lasso.norm"))$Total.Charges,
   imputed_missForest = missForest(churn_numeric)$ximp$Total.Charges
 )
-
-#Forestchurn_imputed <- data.frame(
- # original = churn2$Total.Charges,
-  #imputed_missForest = missForest(churn_numeric)$ximp$Total.Charges
-#)
-#Forestchurn_imputed
-#print('Hi')
 
 h1 <- ggplot(valuemiceforest_imputed, aes(x = original)) +
   geom_histogram(fill = "#ad1538", color = "#000000", position = "identity") +
@@ -74,4 +56,3 @@ h8 <- ggplot(valuemiceforest_imputed, aes(x = imputed_missForest)) +
   ggtitle("missForest-imputed distribution") +
   theme_classic()
 plot_grid(h1, h2, h3, h4, nrow = 2, ncol = 2)
-#h2, h3, h4, h5, h6, h7, h8,
