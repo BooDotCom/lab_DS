@@ -24,18 +24,9 @@ ggplot(titanic_train, aes(Age))+ #aes is mapped to Age
   theme_classic()+
   theme(plot.title = element_text(size=18))
 
-#calc_mode <- function(x){
-#  distinct_values <- unique(x)
-#  distinct_tabulate <-tabulate(match(x, distinct_values))
-#  distinct_values[which.max(distinct_tabulate)]
-#}
-#calc_mode(y)
-#y<- data.frame(Num = '1,2,3,3')
-
 value_imputed<-data.frame(original = titanic_train$Age, imputed_zero = replace(titanic_train$Age, is.na(titanic_train$Age), 0)
                           ,imputed_mean = replace(titanic_train$Age, is.na(titanic_train$Age), mean(titanic_train$Age, na.rm=TRUE))
                           ,imputed_median = replace(titanic_train$Age, is.na(titanic_train$Age), median(titanic_train$Age, na.rm=TRUE))
-                          #,imputed_mode = replace(titanic_train$Age, is.na(titanic_train$Age), calc_mode(titanic_train$Age))
                           )
 
 value_imputed
